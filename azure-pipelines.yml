@@ -22,3 +22,9 @@ stages:
     - script: |
         mvn clean package
       displayName: 'Jar build'
+
+    - task: SendEmail@1
+      inputs:
+        toEmails: 'vineethboddu112233@gmail.com'  # Email address to send the approval request
+        subject: 'Approval Required for Maven JAR Build'
+        messageBody: 'Please approve the Maven JAR build to proceed.'
