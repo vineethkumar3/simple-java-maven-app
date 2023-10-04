@@ -6,7 +6,8 @@
 trigger:
 - master
 
-
+pool:
+  name: Build Agent
 stages:
 - stage: Build
   displayName: 'Building jar'
