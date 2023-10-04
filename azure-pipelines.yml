@@ -21,10 +21,10 @@ stages:
     steps:
     - script: |
         mvn clean package
+        cp target/my-app-1.0-SNAPSHOT.jar $(Build.ArtifactStagingDirectory)
       displayName: 'Jar build'
-
-    - task: SendEmail@1
+    - task: PublishPipelineArtifact@1
       inputs:
-        toEmails: 'vineethboddu112233@gmail.com'  # Email address to send the approval request
-        subject: 'Approval Required for Maven JAR Build'
-        messageBody: 'Please approve the Maven JAR build to proceed.'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifact: 'Buildjar'  # Specify a unique artifact name
+        displayName: 'Publish Buildjar artifact'
