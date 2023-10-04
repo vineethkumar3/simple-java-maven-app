@@ -42,5 +42,4 @@ stages:
       displayName: 'Download BuildJar artifact'
       
     - script: |
-        cd $(Build.ArtifactStagingDirectory)
-        ls
+        java -jar $(Build.ArtifactStagingDirectory)/my-app-1.0-SNAPSHOT.jar
