@@ -29,17 +29,18 @@ stages:
 
 - stage: Release
   displayName: 'Releasing the Jar'
-  jobs:
-  - job: ReleaseJar
-    displayName: 'Releasing the jar'
-    pool:
-      name: Release
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        artifactName: 'Buildjar'  # Specify the same artifact name used in the TrivyScan stage
-        path: $(Build.ArtifactStagingDirectory)
-      displayName: 'Download BuildJar artifact'
+  jobs: 
+  - deployment: deployment
+    environment: 'deployment'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'Buildjar'  # Specify the same artifact name used in the TrivyScan stage
+              path: $(Build.ArtifactStagingDirectory)
+            displayName: 'Download BuildJar artifact'
       
-    - script: |
-        java -jar $(Build.ArtifactStagingDirectory)/my-app-1.0-SNAPSHOT.jar
+          - script: |
+              java -jar $(Build.ArtifactStagingDirectory)/my-app-1.0-SNAPSHOT.jar
