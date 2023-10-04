@@ -41,3 +41,6 @@ stages:
         path: $(Build.ArtifactStagingDirectory)
       displayName: 'Download BuildJar artifact'
       
+    - script: |
+        cd $(Build.ArtifactStagingDirectory)
+        ls
