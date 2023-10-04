@@ -6,8 +6,6 @@
 trigger:
 - master
 
-pool:
-  name: Release
 
 stages:
 - stage: Build
@@ -16,7 +14,7 @@ stages:
   - job: BuildJar
     displayName: 'Running the job to build the jar'
     pool:
-      name: Release
+      name: Build Agent
 
     steps:
     - script: |
@@ -28,3 +26,18 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifact: 'Buildjar'  # Specify a unique artifact name
         displayName: 'Publish Buildjar artifact'
+
+- stage: Release
+  displayName: 'Releasing the Jar'
+  jobs:
+  - job: ReleaseJar
+    displayName: 'Releasing the jar'
+    pool:
+      name: Release
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifactName: 'Buildjar'  # Specify the same artifact name used in the TrivyScan stage
+        path: $(Build.ArtifactStagingDirectory)
+      displayName: 'Download BuildJar artifact'
+      
