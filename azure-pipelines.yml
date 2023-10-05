@@ -10,9 +10,9 @@ pool:
   name: Build Agent
 
 variables:
-  majorVersion: '1'
-  minorVersion: '1'
-  patchVersion: '0'
+  majorVersion: 1
+  minorVersion: 1
+  patchVersion: 0
 
 stages:
 - stage: Build
