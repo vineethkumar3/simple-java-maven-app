@@ -15,6 +15,7 @@ variables:
   patchVersion: 0
 
 stages:
+
 - stage: Build
   displayName: 'Building jar'
   jobs:
@@ -25,7 +26,8 @@ stages:
 
     steps:
     - script: |
-        mvn clean package -DmajorVersion=$(majorVersion) -DminorVersion=$(minorVersion) -DpatchVersion=$(patchVersion)
+        mvn version:set -DnewVersion=$(majorVersion).$(minorVersion).$(minorVersion)
+        mvn clean package
         cp target/*.jar $(Build.ArtifactStagingDirectory)
       displayName: 'Jar build'
     - task: PublishPipelineArtifact@1
