@@ -26,8 +26,7 @@ stages:
 
     steps:
     - script: |
-        mvn version:set -DnewVersion=$(majorVersion).$(minorVersion).$(minorVersion)
-        mvn clean package
+        mvn clean package -DmajorVersion=$(majorVersion) -DminorVersion=$(minorVersion) -DpatchVersion=$(patchVersion)
         cp target/*.jar $(Build.ArtifactStagingDirectory)
       displayName: 'Jar build'
     - task: PublishPipelineArtifact@1
@@ -53,3 +52,18 @@ stages:
       
           - script: |
               java -jar $(Build.ArtifactStagingDirectory)/*.jar
+
+- stage: GitPublish
+  displayName: 'Publishing the git data'
+  jobs:
+  - job: Git
+    displayName: 'Job to push remote'
+    pool:
+      name: Release
+    
+    steps:
+    - script: |
+        git status
+        git add .
+        git commit -m "updated the pom file"
+        git push origin master
