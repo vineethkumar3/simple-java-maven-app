@@ -8,6 +8,12 @@ trigger:
 
 pool:
   name: Build Agent
+
+variables:
+  majorVersion: 1
+  minorVersion: 1
+  patchVersion: 0
+
 stages:
 - stage: Build
   displayName: 'Building jar'
@@ -20,7 +26,7 @@ stages:
     steps:
     - script: |
         mvn clean package
-        cp target/my-app-1.0-SNAPSHOT.jar $(Build.ArtifactStagingDirectory)
+        cp target/*.jar $(Build.ArtifactStagingDirectory)
       displayName: 'Jar build'
     - task: PublishPipelineArtifact@1
       inputs:
@@ -44,4 +50,4 @@ stages:
             displayName: 'Download BuildJar artifact'
       
           - script: |
-              java -jar $(Build.ArtifactStagingDirectory)/my-app-1.0-SNAPSHOT.jar
+              java -jar $(Build.ArtifactStagingDirectory)/*.jar
