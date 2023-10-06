@@ -66,4 +66,4 @@ stages:
         git status
         git add .
         git commit -m "updated the pom file"
-        git push origin master
+        git push
