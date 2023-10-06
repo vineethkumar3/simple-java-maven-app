@@ -15,7 +15,18 @@ variables:
   patchVersion: 0
 
 stages:
-
+- stage: versioning
+  displayName: 'versioning'
+  jobs:
+  - job: Versioning
+    displayName: 'versioning'
+    pool:
+      name: Build Agent
+    
+    steps:
+    - script: |
+        python3 version.py
+      
 - stage: Build
   displayName: 'Building jar'
   jobs:
